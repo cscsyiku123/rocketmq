@@ -1,3 +1,49 @@
+
+
+## 新增支持任意时间的延迟消息。
+
+* 优点：
+
+支持任意时间的延迟消息
+
+任意延迟消息不到期不会删除
+
+rocketmq原有的所有优点
+
+* 缺点：
+
+commitlog、comsumequeue文件空间浪费
+
+rocketmq原有的所有缺点
+
+
+
+* 可配置项：
+
+```
+//任意延迟消息属性配置
+//commitLog路径
+anyDelayStorePathCommitLog =G:\\BaiduNetdiskWorkspace\\temp\\rocketmq\\dataDir\\dataDir\\anydelaycommitlog
+//消息队列存储路径
+anyDelaystorePathConsumeQueue =G:\\BaiduNetdiskWorkspace\\temp\\rocketmq\\dataDir\\dataDir\\anydelayconsumequeue
+//任意延迟消息保留时间，指的是到达延迟时间后再经过多少天才删除
+anyDelayfileReservedTime = 48
+```
+
+* 使用方法：
+
+```
+ //注：跟message.setDelayTimeLevel();冲突
+ Message message = new Message("my_topic", "Hello RocketMQ".getBytes());
+ //指定11秒后到期
+ message.setDelayTimeStamp(11000);
+ //or 指定11秒后到期
+ //message.setFixTimeStamp(System.currentTimeMillis()+11000);
+```
+
+
+
+
 ## Apache RocketMQ 
 [![Build Status](https://travis-ci.org/apache/rocketmq.svg?branch=master)](https://travis-ci.org/apache/rocketmq) [![Coverage Status](https://coveralls.io/repos/github/apache/rocketmq/badge.svg?branch=master)](https://coveralls.io/github/apache/rocketmq?branch=master)
 [![CodeCov](https://codecov.io/gh/apache/rocketmq/branch/master/graph/badge.svg)](https://codecov.io/gh/apache/rocketmq)
