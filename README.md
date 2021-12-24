@@ -14,6 +14,8 @@ rocketmq原有的所有优点
 
 commitlog、comsumequeue文件空间浪费
 
+不支持DLedger 模式
+
 rocketmq原有的所有缺点
 
 
