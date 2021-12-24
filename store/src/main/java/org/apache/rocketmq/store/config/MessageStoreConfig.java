@@ -24,6 +24,16 @@ import org.apache.rocketmq.store.ConsumeQueue;
 public class MessageStoreConfig {
 
     public static final String MULTI_PATH_SPLITTER = System.getProperty("rocketmq.broker.multiPathSplitter", ",");
+    private String anyDelayStorePathCommitLog = System.getProperty("user.home") + File.separator + "store"
+                                                + File.separator + "anydelaycommitlog";
+    private int anyDelayfileReservedTime = 48;
+
+    public int getAnyDelayQueueId() {
+        return anyDelayQueueId;
+    }
+
+    private int anyDelayQueueId=100;
+
 
     //The root directory in which the log data is kept
     @ImportantField
@@ -32,7 +42,7 @@ public class MessageStoreConfig {
     //The directory in which the commitlog is kept
     @ImportantField
     private String storePathCommitLog = System.getProperty("user.home") + File.separator + "store"
-        + File.separator + "commitlog";
+                                        + File.separator + "commitlog";
 
     private String readOnlyCommitLogStorePaths = null;
 
@@ -158,6 +168,22 @@ public class MessageStoreConfig {
     private boolean isEnableBatchPush = false;
 
     private boolean enableScheduleMessageStats = true;
+
+    public String getAnyDelayStorePathCommitLog() {
+        return anyDelayStorePathCommitLog;
+    }
+
+    public void setAnyDelayStorePathCommitLog(String anyDelayStorePathCommitLog) {
+        this.anyDelayStorePathCommitLog = anyDelayStorePathCommitLog;
+    }
+
+    public int getAnyDelayfileReservedTime() {
+        return anyDelayfileReservedTime;
+    }
+
+    public void setAnyDelayfileReservedTime(int anyDelayfileReservedTime) {
+        this.anyDelayfileReservedTime = anyDelayfileReservedTime;
+    }
 
     public boolean isDebugLockEnable() {
         return debugLockEnable;
@@ -627,7 +653,7 @@ public class MessageStoreConfig {
      */
     public boolean isTransientStorePoolEnable() {
         return transientStorePoolEnable && FlushDiskType.ASYNC_FLUSH == getFlushDiskType()
-            && BrokerRole.SLAVE != getBrokerRole();
+               && BrokerRole.SLAVE != getBrokerRole();
     }
 
     public void setTransientStorePoolEnable(final boolean transientStorePoolEnable) {

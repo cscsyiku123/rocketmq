@@ -163,7 +163,28 @@ public class Message implements Serializable {
     public void setWaitStoreMsgOK(boolean waitStoreMsgOK) {
         this.putProperty(MessageConst.PROPERTY_WAIT_STORE_MSG_OK, Boolean.toString(waitStoreMsgOK));
     }
+    /**
+     * 延迟消息
+     * @param delayTimeStamp 单位millisecond,精确到1000ms
+     */
+    public void setDelayTimeStamp(long delayTimeStamp) {
+        long l = delayTimeStamp / 1000 * 1000;
+        this.putProperty(MessageConst.PROPERTY_DELAY_TIMESTAMP, String.valueOf(l));
+        this.setDelayTimeLevel(101);
+    }
 
+    /**
+     *  定时消息
+     * @param timeStamp 期望收到消息的时间
+     */
+    public void setFixTimeStamp(long timeStamp) {
+        //定时消息
+        long now = System.currentTimeMillis();
+        if (now > timeStamp) {
+            throw new RuntimeException("定时消息应该比当前时间晚");
+        }
+        this.setDelayTimeStamp(timeStamp-now);
+    }
     public void setInstanceId(String instanceId) {
         this.putProperty(MessageConst.PROPERTY_INSTANCE_ID, instanceId);
     }
